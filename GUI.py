@@ -66,7 +66,7 @@ def run_code(folder_path, new_value):
     result_text.insert(tk.END, text)  # 插入结果文本
     result_text.config(state='disabled')  # 禁止编辑
 
-    print(text)
+    # print(text)
 
 
 
