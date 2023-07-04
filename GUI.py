@@ -26,6 +26,8 @@ def run_code(folder_path, new_value):
                 toplist = df
                 toplist.dropna(how='all', inplace=True)
 
+    df_total.to_excel(folder_path + '当期总表.xlsx', index=False)  # 输出当期总表
+    
     df_this_week = df_total[df_total['if_new'] == 1]
     week_in = df_this_week['机构'].nunique()
     week_people = df_this_week['人名'].nunique()
@@ -55,8 +57,11 @@ def run_code(folder_path, new_value):
     count_potential = df_potential['机构'].nunique()
     potential_list = df_potential['机构'].unique().tolist()[0:5]
 
-    result1 = f'* 自6月21日至{new_value}，本周合计与{week_in}个机构{week_people}人沟通，包括：1*1合计{one_on_one_in}个机构（覆盖{one_on_one_people}人），{count_brokers}家brokers（包括：{brokers_list}）举办的NDR或行业会议。'
-    result2 = f'* 自财报第二天（5月17日），我们已沟通{total_in}家机构{total_people}人，包括Top10中的{count_top10}个({count_top10_list}); 以及另外{count_top30}个Top 30大股东。潜在买家{count_potential}个，包括：{potential_list}。潜在买家定义：持股量少于10万ADR。'
+    brokers_list_str = ', '.join('%s'%brokers for brokers in brokers_list)
+    count_top10_list_str = ', '.join('%s'%top10 for top10 in count_top10_list)
+    
+    result1 = f'* 自6月21日至{new_value}，本周合计与{week_in}个机构{week_people}人沟通，包括：1*1合计{one_on_one_in}个机构（覆盖{one_on_one_people}人），{count_brokers}家brokers（包括：{brokers_list_str}）举办的NDR或行业会议。'
+    result2 = f'* 自财报第二天（5月17日），我们已沟通{total_in}家机构{total_people}人，包括Top10中的{count_top10}个({count_top10_list_str}); 以及另外{count_top30}个Top 30大股东。潜在买家{count_potential}个，包括：{potential_list}。潜在买家定义：持股量少于10万ADR。'
 
     text = result1 + '\n' + result2
 
