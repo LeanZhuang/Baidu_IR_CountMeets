@@ -1,4 +1,6 @@
 import tkinter as tk
+from tkinter.ttk import *
+import ctypes
 import tkinter.filedialog as fd
 import pandas as pd
 import os
@@ -59,9 +61,10 @@ def run_code(folder_path, new_value):
 
     brokers_list_str = ', '.join('%s'%brokers for brokers in brokers_list)
     count_top10_list_str = ', '.join('%s'%top10 for top10 in count_top10_list)
+    potential_list_str = ', '.join('%s'%potential for potential in potential_list)
     
     result1 = f'* 自6月21日至{new_value}，本周合计与{week_in}个机构{week_people}人沟通，包括：1*1合计{one_on_one_in}个机构（覆盖{one_on_one_people}人），{count_brokers}家brokers（包括：{brokers_list_str}）举办的NDR或行业会议。'
-    result2 = f'* 自财报第二天（5月17日），我们已沟通{total_in}家机构{total_people}人，包括Top10中的{count_top10}个({count_top10_list_str}); 以及另外{count_top30}个Top 30大股东。潜在买家{count_potential}个，包括：{potential_list}。潜在买家定义：持股量少于10万ADR。'
+    result2 = f'* 自财报第二天（5月17日），我们已沟通{total_in}家机构{total_people}人，包括Top10中的{count_top10}个({count_top10_list_str}); 以及另外{count_top30}个Top 30大股东。潜在买家{count_potential}个，包括：{potential_list_str}。潜在买家定义：持股量少于10万ADR。'
 
     text = result1 + '\n' + result2
 
@@ -85,7 +88,15 @@ def browse_folder():
 # 创建窗口
 window = tk.Tk()
 window.title("计算程序")
-window.geometry("400x300")
+window.geometry("800x600")
+
+#调用api设置成由应用程序缩放
+ctypes.windll.shcore.SetProcessDpiAwareness(1)
+#调用api获得当前的缩放因子
+ScaleFactor = ctypes.windll.shcore.GetScaleFactorForDevice(0)
+#设置缩放因子
+window.tk.call('tk', 'scaling', ScaleFactor/75)
+
 
 # 创建输入文本框标签
 new_label = tk.Label(window, text="输入最新日期:")
