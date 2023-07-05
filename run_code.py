@@ -23,7 +23,7 @@ def run_code(folder_path, new_value):
                 toplist = df
                 toplist.dropna(how='all', inplace=True)
 
-    df_total.to_excel(os.path.join(folder_path, '当期总表.xlsx'), index=False)  # 输出当期总表
+    df_total.to_excel(os.path.join(folder_path, '【底稿】当期总表.xlsx'), index=False)  # 输出当期总表
 
     df_this_week = df_total[df_total['if_new'] == 1]
     week_in = df_this_week['机构'].nunique()
