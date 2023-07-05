@@ -1,6 +1,7 @@
 import tkinter as tk
 # import ctypes
 import tkinter.filedialog as fd
+import tkinter.messagebox as messagebox
 from run_code import run_code
 
 
@@ -8,18 +9,23 @@ def browse_folder():
     folder_path = fd.askdirectory()
     if folder_path:
         new_value = new_entry.get()
+        
         result1, result2 = run_code(folder_path, new_value)
         show_results(result1, result2)
 
 
 def show_results(result1, result2):
-    text = result1 + '\n' + result2
+    new_value = new_entry.get()
+    if len(new_value) != 4 or not new_value.isdigit():
+            text = '--------- ERROR ---------\n\n请输入正确的日期格式，如：0621'
+    else:
+        text = result1 + '\n' + result2
 
     result_text.config(state='normal')  # 允许编辑
     result_text.delete(1.0, tk.END)  # 清空文本框内容
     result_text.insert(tk.END, text)  # 插入结果文本
     result_text.config(state='disabled')  # 禁止编辑
-
+            
 
 # 创建窗口
 window = tk.Tk()
