@@ -3,7 +3,7 @@ import tkinter as tk
 import tkinter.filedialog as fd
 import tkinter.messagebox as messagebox
 from run_code import run_code
-
+import text_config
 
 def browse_folder():
     folder_path = fd.askdirectory()
@@ -14,14 +14,14 @@ def browse_folder():
             result1, result2 = run_code(folder_path, new_value)
             show_results(result1, result2)
         except:
-            result1, result2 = '-------------------------\n--------- ERROR ---------\n-------------------------\n\n请检查文件夹内是否有正确的文件', ''
+            result1, result2 = text_config.file_error, text_config.empty
             show_results(result1, result2)
 
 
 def show_results(result1, result2):
     new_value = new_entry.get()
     if len(new_value) != 4 or not new_value.isdigit():
-            text = '-------------------------\n--------- ERROR ---------\n-------------------------\n\n请输入正确的日期格式，如：0621'
+            text = text_config.date_error
     else:
         text = result1 + '\n' + result2
 
