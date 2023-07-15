@@ -33,8 +33,8 @@ def show_results(result1, result2):
 
 # 创建窗口
 window = tk.Tk()
-window.title("计算程序")
-window.geometry("800x600")
+window.title("数会计算程序")
+window.geometry("600x400")
 
 # 调用api设置成由应用程序缩放
 # ctypes.windll.shcore.SetProcessDpiAwareness(1)
