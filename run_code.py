@@ -91,6 +91,7 @@ def run_code(folder_path, new_value):
     potential_list_str = ', '.join('%s' % potential for potential in potential_list)
 
     result1 = f'* 自{period_start(new_value)}至{convert_to_month_day(new_value)}，本周合计与{week_in}个机构{week_people}人沟通，包括：1*1合计{one_on_one_in}个机构（覆盖{one_on_one_people}人），{count_brokers}家brokers（包括：{brokers_list_str}）举办的NDR或行业会议。'
+    
     result2 = f'* 自财报第二天（5月17日），我们已沟通{total_in}家机构{total_people}人，包括Top10中的{count_top10}个({count_top10_list_str}); 以及另外{count_top30}个Top 30大股东。潜在买家{count_potential}个，包括：{potential_list_str}。潜在买家定义：持股量少于10万ADR。'
 
     return result1, result2
