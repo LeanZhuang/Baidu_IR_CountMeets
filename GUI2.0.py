@@ -2,26 +2,25 @@ import tkinter as tk
 # import ctypes
 import tkinter.filedialog as fd
 import tkinter.messagebox as messagebox
-from run_code import run_code
+from run_code import try_to_count_meet
 import text_config
 
+
 def browse_folder():
+    """选择底稿所在的文件夹，同时尝试数会计算。
+    """
     folder_path = fd.askdirectory()
     if folder_path:
         new_value = new_entry.get()
         
-        try:
-            result1, result2 = run_code(folder_path, new_value)
-            show_results(result1, result2)
-        except:
-            result1, result2 = text_config.file_error, text_config.empty
-            show_results(result1, result2)
+        result1, result2 = try_to_count_meet(folder_path, new_value)
+        show_results(result1, result2)
 
 
 def show_results(result1, result2):
     new_value = new_entry.get()
     if len(new_value) != 4 or not new_value.isdigit():
-            text = text_config.date_error
+        text = text_config.date_error  # 日期格式错误
     else:
         text = result1 + '\n' + result2
 

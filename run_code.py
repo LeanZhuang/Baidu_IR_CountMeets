@@ -2,41 +2,22 @@ import pandas as pd
 import numpy as np
 import os
 from datetime import datetime
+from date_process import convert_to_month_day, period_start
+from detect_error import detect_column_name
 
 
-def convert_to_month_day(value):
-    # 获取月份和日期，并转换成字符串输出
-    month = str(int(value[:2]))
-    day = str(int(value[2:]))
-
-    # 构造输出字符串
-    output_string = f"{month}月{day}日"
-    return output_string
-
-
-def period_start(value):
-    month = int(value[:2])
-    day = int(value[2:]) - 7
-
-    if day <= 0:
-        month -= 1
-        day += 30
-    
-    month = str(month)
-    day = str(day)
-    
-    # 构造输出字符串
-    output_string = f"{month}月{day}日"
-    return output_string
-
-
-def run_code(folder_path, new_value):
+def count_meet(folder_path, new_value):
     df_total = pd.DataFrame()
 
     file_names = os.listdir(folder_path)
+    
+    # 如果存在文件名为“【底稿】当期总表”的文件，那么将其删除
+    file_names.remove('【底稿】当期总表.xlsx')
+
 
     for file_name in file_names:
         file_path = os.path.join(folder_path, file_name)
+        
 
         if file_name.endswith('.xlsx') or file_name.endswith('.xls'):
             df = pd.read_excel(file_path)
@@ -93,5 +74,18 @@ def run_code(folder_path, new_value):
     result1 = f'* 自{period_start(new_value)}至{convert_to_month_day(new_value)}，本周合计与{week_in}个机构{week_people}人沟通，包括：1*1合计{one_on_one_in}个机构（覆盖{one_on_one_people}人），{count_brokers}家brokers（包括：{brokers_list_str}）举办的NDR或行业会议。'
     
     result2 = f'* 自财报第二天（5月17日），我们已沟通{total_in}家机构{total_people}人，包括Top10中的{count_top10}个({count_top10_list_str}); 以及另外{count_top30}个Top 30大股东。潜在买家{count_potential}个，包括：{potential_list_str}。潜在买家定义：持股量少于10万ADR。'
+
+    return result1, result2
+
+
+def try_to_count_meet(folder_path, new_value):
+    
+    result1, result2 = detect_column_name(folder_path)
+    
+    if (result1 == True) and (result2 == True):
+        result1, result2 = count_meet(folder_path, new_value)
+    else:
+        result1, result2 = result1, result2
+
 
     return result1, result2
