@@ -1,3 +1,9 @@
+'''
+辅助模块
+模块功能：处理日期数据
+'''
+
+
 def convert_to_month_day(value):
     # 获取月份和日期，并转换成字符串输出
     month = str(int(value[:2]))

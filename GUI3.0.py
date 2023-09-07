@@ -1,3 +1,8 @@
+'''
+数会程序的GUI界面，使用tkinter库。
+'''
+
+
 import tkinter as tk
 # import ctypes
 import tkinter.filedialog as fd
@@ -13,16 +18,16 @@ def browse_folder():
     if folder_path:
         new_value = new_entry.get()
         
-        result1, result2 = try_to_count_meet(folder_path, new_value)
-        show_results(result1, result2)
+        result = try_to_count_meet(folder_path, new_value)
+        show_results(result)
 
 
-def show_results(result1, result2):
+def show_results(result):
     new_value = new_entry.get()
     if len(new_value) != 4 or not new_value.isdigit():
         text = text_config.date_error  # 日期格式错误
     else:
-        text = result1 + '\n' + result2
+        text = result
 
     result_text.config(state='normal')  # 允许编辑
     result_text.delete(1.0, tk.END)  # 清空文本框内容
@@ -55,7 +60,7 @@ button = tk.Button(window, text="选择底稿文件夹", command=browse_folder)
 button.pack(pady=10)
 
 # 创建提示文本
-warning_label = tk.Label(window, text="注意底稿文件命名规范", fg="red")
+warning_label = tk.Label(window, text=text_config.notice, fg="red", anchor="w", justify="left")
 warning_label.pack()
 
 # 创建文本框用于显示结果
