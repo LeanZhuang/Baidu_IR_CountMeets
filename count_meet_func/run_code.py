@@ -10,15 +10,15 @@ import pandas as pd
 import numpy as np
 import os
 from datetime import datetime
-from date_process import convert_to_month_day, period_start
-from detect_error import detect_column_name
+from count_meet_func.date_process import convert_to_month_day, period_start
+from count_meet_func.detect_error import detect_column_name
 
 
-def count_meet(folder_path, new_value):
+def count_meet(folder_path, new_value) -> str:
     df_total = pd.DataFrame()
 
     file_names = os.listdir(folder_path)
-    
+
     # 如果存在文件名为“【底稿】当期总表”的文件，那么将其删除
     if '【底稿】当期总表.xlsx' in file_names:
         file_names.remove('【底稿】当期总表.xlsx')
@@ -26,7 +26,7 @@ def count_meet(folder_path, new_value):
 
     for file_name in file_names:
         file_path = os.path.join(folder_path, file_name)
-        
+
 
         if file_name.endswith('.xlsx') or file_name.endswith('.xls'):
             df = pd.read_excel(file_path)
@@ -52,10 +52,10 @@ def count_meet(folder_path, new_value):
     one_on_one_people = df_this_week_1on1['人名'].nunique()
 
     brokers_list = df_this_week['group'].unique().tolist()
-    
+
     if np.nan in brokers_list:
         brokers_list.remove(np.nan)
-    
+
     count_brokers = len(brokers_list)
 
     total_in = df_total['机构'].nunique()
@@ -79,7 +79,7 @@ def count_meet(folder_path, new_value):
     brokers_list_str = ', '.join('%s' % brokers for brokers in brokers_list)
     count_top10_list_str = ', '.join('%s' % top10 for top10 in count_top10_list)
     potential_list_str = ', '.join('%s' % potential for potential in potential_list)
-    
+
     result = f"""
     * 自{period_start(new_value)}至{convert_to_month_day(new_value)}，本周合计与{week_in}个机构{week_people}人沟通，包括：1*1合计{one_on_one_in}个机构（覆盖{one_on_one_people}人），{count_brokers}家brokers（包括：{brokers_list_str}）举办的NDR或行业会议。
     \n
@@ -90,9 +90,10 @@ def count_meet(folder_path, new_value):
 
 
 def try_to_count_meet(folder_path, new_value):
-    
+    '''尝试进行数会运算，看是否会报错'''
+
     is_matching = detect_column_name(folder_path)
-    
+
     if is_matching == True:
         result = count_meet(folder_path, new_value)
     else:

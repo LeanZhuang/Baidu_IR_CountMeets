@@ -7,8 +7,8 @@ import tkinter as tk
 # import ctypes
 import tkinter.filedialog as fd
 import tkinter.messagebox as messagebox
-from run_code import try_to_count_meet
-import text_config
+from count_meet_func.run_code import try_to_count_meet
+import count_meet_func.text_config as text_config
 
 
 def browse_folder():
