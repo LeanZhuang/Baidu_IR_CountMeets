@@ -1,0 +1,3 @@
+([('GUI3.0',
+   '/Users/zhuangyuhao/VSCodeProjects/CountMeets/dist/GUI3.0',
+   'EXECUTABLE')],)
